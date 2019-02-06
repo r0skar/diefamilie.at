@@ -1,0 +1,47 @@
+{
+  "name": "vue-dato-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dump": "rimraf ./cms && dato dump",
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build --modern --report",
+    "generate": "yarn dump && yarn build",
+    "lint": "vue-cli-service lint --no-fix",
+    "lint:fix": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "gsap": "^2.0.2",
+    "lodash": "^4.17.11",
+    "plyr": "^3.4.8",
+    "polished": "^2.3.3",
+    "typestyle": "^2.0.1",
+    "vue": "^2.6.0",
+    "vue-class-component": "^6.0.0",
+    "vue-meta": "^1.5.8",
+    "vue-observe-visibility": "^0.4.3",
+    "vue-property-decorator": "^7.0.0",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuex-simple": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/gsap": "^1.20.1",
+    "@types/lodash": "^4.14.120",
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-plugin-typescript": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "@vue/eslint-config-typescript": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "datocms-client": "^0.8.13",
+    "eslint": "^5.8.0",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.3.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "prerender-spa-plugin": "^3.4.0",
+    "prettier": "^1.16.4",
+    "rimraf": "^2.6.3",
+    "typescript": "~3.2.2",
+    "vue-template-compiler": "^2.6.0"
+  }
+}

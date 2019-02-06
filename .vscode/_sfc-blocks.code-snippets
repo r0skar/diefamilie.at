@@ -1,0 +1,29 @@
+{
+  "script": {
+    "scope": "vue",
+    "prefix": "script",
+    "body": [
+      "<script lang=\"ts\">",
+      "import { Component, Vue } from 'vue-property-decorator'",
+      "",
+      "@Component",
+      "export default class ${1} extends Vue {",
+      "\t${0}",
+      "}",
+      "</script>"
+    ],
+    "description": "<script>"
+  },
+  "template": {
+    "scope": "vue",
+    "prefix": "template",
+    "body": ["<template>", "\t${0}", "</template>"],
+    "description": "<template>"
+  },
+  "style": {
+    "scope": "vue",
+    "prefix": "style",
+    "body": ["<style lang=\"scss\" module>", "${0}", "</style>"],
+    "description": "<style lang=\"scss\" module>"
+  }
+}

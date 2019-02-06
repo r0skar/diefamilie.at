@@ -1,0 +1,53 @@
+{
+  // Events
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.tabCompletion": "on",
+  "vetur.completion.useScaffoldSnippets": false,
+
+  // Eslint
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.run": "onType",
+  "eslint.validate": [
+    { "language": "javascript", "autoFix": true },
+    { "language": "typescript", "autoFix": true },
+    { "language": "javascriptreact", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true },
+    { "language": "vue", "autoFix": true },
+    { "language": "vue-html", "autoFix": true },
+    { "language": "html", "autoFix": true }
+  ],
+  "eslint.options": {
+    "ignorePath": "/home/oskar/dev/vue-dato-boilerplate/.gitignore"
+  },
+
+  // Prettier
+  "prettier.disableLanguages": ["html"],
+  "prettier.ignorePath": "/home/oskar/dev/vue-dato-boilerplate/.gitignore",
+  "prettier.requireConfig": true,
+  // Run eslint & stylelint AFTER formatting with prettier.
+  "prettier.stylelintIntegration": false,
+  "prettier.eslintIntegration": false,
+
+  // HTML
+  "vetur.validation.template": false,
+  "html.format.enable": false,
+  "vetur.format.defaultFormatter.html": "none",
+
+  // JS & TS
+  "vetur.validation.script": false,
+  "typescript.format.enable": false,
+  "javascript.format.enable": false,
+  "json.format.enable": false,
+
+  // CSS
+  "vetur.validation.style": false,
+  "stylelint.enable": true,
+  "css.validate": false,
+  "scss.validate": false,
+  "stylelint.configOverrides": {
+    "ignorePath": "/home/oskar/dev/vue-dato-boilerplate/.gitignore"
+  }
+}
