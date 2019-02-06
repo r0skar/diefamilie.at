@@ -1,5 +1,5 @@
 <template>
-  <footer :class="styles.footer">
+  <footer>
     <div :class="styles.wrap">
       <AppContact />
       <AppInfo />
@@ -21,13 +21,11 @@ import AppInfo from './AppInfo.vue'
 })
 export default class AppFooter extends Vue {
   public styles = {
-    footer: css({
-      ...design.Utils.vAlign,
-      height: design.appFooterHeight,
-      textAlign: `center`
-    }),
     wrap: css({
-      ...design.Utils.wrap(design.appWidth, `84%`, `center`)
+      ...design.Utils.wrap(design.appWidth, `84%`, `center`),
+      ...design.Utils.fillParentHeight,
+      ...design.Utils.vAlign,
+      textAlign: `center`
     })
   }
 }

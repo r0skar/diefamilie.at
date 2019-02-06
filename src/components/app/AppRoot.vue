@@ -1,15 +1,15 @@
 <template>
-  <div id="app"
-       :class="styles.app">
-    <AppHeader />
-    <AppMain :class="styles.main" />
-    <AppFooter />
+  <div id="app">
+    <AppHeader :class="styles.header" />
+    <AppMain :class="[styles.main, mainSpacing]" />
+    <AppFooter :class="[styles.footer, footerVisibility]" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { css } from '~src/design'
+import { Store, useStore } from '~src/store'
+import { css, design } from '~src/design'
 import AppFooter from './AppFooter.vue'
 import AppHeader from './AppHeader.vue'
 import AppMain from './AppMain.vue'
@@ -22,13 +22,45 @@ import AppMain from './AppMain.vue'
   }
 })
 export default class App extends Vue {
+  private store: Store = useStore(this.$store)
+
   public styles = {
-    app: css({
-      display: `flex`,
-      flexDirection: `column`
+    header: css({
+      height: design.appHeaderHeight
     }),
     main: css({
-      flex: 1
+      backgroundColor: design.colors.bg,
+      minHeight: `calc(100vh - ${design.appHeaderHeight})`
+    }),
+    footer: css({
+      backgroundColor: design.colors.brand,
+      bottom: 0,
+      left: 0,
+      height: design.appFooterHeight,
+      position: `fixed`,
+      width: `100%`,
+      zIndex: -1
+    })
+  }
+
+  private get showFooter() {
+    const { to, from, status } = this.store.app.router
+
+    return (
+      (to.fullPath !== `/` && status === `hasEntered`) ||
+      (from.fullPath !== `/` && to.fullPath !== `/`)
+    )
+  }
+
+  private get mainSpacing() {
+    return css({
+      marginBottom: this.showFooter ? design.appFooterHeight : undefined
+    })
+  }
+
+  private get footerVisibility() {
+    return css({
+      display: this.showFooter ? `block` : `none`
     })
   }
 }

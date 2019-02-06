@@ -1,5 +1,5 @@
 <template>
-  <header :class="styles.header">
+  <header>
     <div :class="styles.wrap">
       <AppLogo />
     </div>
@@ -18,13 +18,11 @@ import AppLogo from './AppLogo.vue'
 })
 export default class AppHeader extends Vue {
   public styles = {
-    header: css({
-      ...design.Utils.vAlign,
-      height: design.appHeaderHeight,
-      textAlign: `center`
-    }),
     wrap: css({
-      ...design.Utils.wrap(design.appWidth, `84%`, `center`)
+      ...design.Utils.wrap(design.appWidth, `84%`, `center`),
+      ...design.Utils.fillParentHeight,
+      ...design.Utils.vAlign,
+      textAlign: `center`
     })
   }
 }
