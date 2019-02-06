@@ -37,7 +37,7 @@ export default class ProjectHeader extends Vue {
   public styles = {
     container: css({
       display: `block`,
-      height: `calc(100vh - ${design.appHeaderHeight} - ${design.Utils.ms(2.5)})`,
+      height: `calc(100vh - ${design.appHeaderHeight} - ${design.Utils.ms(3.25)})`,
       textDecoration: `none`,
       position: `relative`
     }),
