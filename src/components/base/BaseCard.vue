@@ -61,8 +61,8 @@ export default class BaseCard extends Vue {
       media(
         { minWidth: design.breakpoints.sm },
         {
-          float: `right`,
-          width: `calc(100% - ${design.Utils.ms(5)})`
+          float: `left`,
+          maxWidth: `calc(100% - ${design.Utils.ms(5)})`
         }
       )
     )
