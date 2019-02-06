@@ -54,7 +54,8 @@ export default class App extends Vue {
 
   private get mainSpacing() {
     return css({
-      marginBottom: this.showFooter ? design.appFooterHeight : undefined
+      marginBottom: this.showFooter ? design.appFooterHeight : undefined,
+      paddingBottom: this.showFooter ? `calc(${design.appHeaderHeight} / 2)` : undefined
     })
   }
 
