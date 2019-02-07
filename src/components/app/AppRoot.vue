@@ -27,7 +27,9 @@ export default class App extends Vue {
 
   public styles = {
     app: css({
-      overflowX: `hidden`
+      // overflow: `hidden`,
+      minHeight: `100vh`,
+      width: `100%`
     }),
     header: css({
       height: design.appHeaderHeight

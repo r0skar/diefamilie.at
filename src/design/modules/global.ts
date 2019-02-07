@@ -23,11 +23,6 @@ export const globalCss = () => {
     color: colors.text
   })
 
-  cssRule(`#app`, {
-    minHeight: `100vh`,
-    width: `100%`
-  })
-
   cssRule(`b, strong`, {
     fontWeight: fontWeights.bold
   })
