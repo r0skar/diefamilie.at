@@ -1,7 +1,8 @@
 <template>
   <div>
     <div :class="styles.container">
-      <div :class="styles.search.container">
+      <div id="search"
+           :class="styles.search.container">
         <AppSearch
           :class="styles.search.form"
           @focus="searchFocused = true"
@@ -13,7 +14,8 @@
                :class="styles.search.seperator" />
         </div>
       </div>
-      <div :class="styles.nav">
+      <div id="nav"
+           :class="styles.nav">
         <AppNav />
       </div>
     </div>
@@ -102,7 +104,9 @@ export default class HomeView extends Mixins(ViewMixin) {
         'ul > li > a': this.itemContent,
         'ul > li:nth-child(1)': {
           right: `calc((${this.itemWidth} / 2) * -1)`,
-          top: `calc(50% - 0.5rem)`,
+          top: `calc(50% - 0.5rem)`
+        },
+        'ul > li:nth-child(1) a': {
           transform: `rotate(90deg)`
         },
         'ul > li:nth-child(2)': {
@@ -111,7 +115,9 @@ export default class HomeView extends Mixins(ViewMixin) {
         },
         'ul > li:nth-child(3)': {
           left: `calc((${this.itemWidth} / 2) * -1)`,
-          top: `calc(50% - 0.5rem)`,
+          top: `calc(50% - 0.5rem)`
+        },
+        'ul > li:nth-child(3) a': {
           transform: `rotate(-90deg)`
         }
       }

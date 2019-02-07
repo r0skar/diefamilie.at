@@ -27,24 +27,26 @@ const getDirection = (path: string) => {
  * Return a new timeline that fades in the main router view
  * from outside the viewport based on the current route.
  */
-const defaultEnterTimeline = (el: HTMLElement, route: IRoute) => {
+const defaultEnterTimeline = (el: HTMLElement, route: IRoute, immediate = false) => {
   const direction = getDirection(route.to.fullPath)
+  const duration = immediate ? 0 : ROUTE_ENTER_DURATION
 
   return new Timeline()
-    .to(el, ROUTE_ENTER_DURATION, { autoAlpha: 1, ease: Power2.easeIn })
-    .from(el, ROUTE_ENTER_DURATION, direction, `-=${ROUTE_ENTER_DURATION}`)
+    .to(el, duration, { autoAlpha: 1, ease: Power2.easeIn })
+    .from(el, duration, direction, `-=${duration}`)
 }
 
 /**
  * Return a new timeline that fades out the main router view
  * to outside the viewport based on the current route.
  */
-const defaultLeaveTimeline = (el: HTMLElement, route: IRoute) => {
+const defaultLeaveTimeline = (el: HTMLElement, route: IRoute, immediate = false) => {
   const direction = getDirection(route.from.fullPath)
+  const duration = immediate ? 0 : ROUTE_LEAVE_DURATION
 
   return new Timeline()
-    .to(el, ROUTE_LEAVE_DURATION, { autoAlpha: 0, ease: Power2.easeOut })
-    .to(el, ROUTE_LEAVE_DURATION, direction, `-=${ROUTE_LEAVE_DURATION}`)
+    .to(el, duration, { autoAlpha: 0, ease: Power2.easeOut })
+    .to(el, duration, direction, `-=${duration}`)
 }
 
 /**
@@ -75,27 +77,53 @@ const defaultTransition = (route: IRoute): { enter: ITransition; leave: ITransit
  */
 const homeTransition = (route: IRoute): { enter: ITransition; leave: ITransition } => {
   const logo = document.querySelector(`#logo`)!
+  const search = [document.querySelector(`#search`)!]
+  const nav = Array.from(document.querySelectorAll(`#nav ul li`))
   const y = `${(100 - Number(design.Utils.stripUnit(design.appHeaderHeight))) / 2}vh`
 
   return {
     enter: (el: HTMLElement) => {
-      const defaultTl = defaultEnterTimeline(el, route)
-      const homeTl = new Timeline()
+      const direction = getDirection(route.to.fullPath)
+      const defaultTl = defaultEnterTimeline(el, route, true)
+      const logoTl = new Timeline()
         .to(logo, 1, { y, ease: Power2.easeOut })
         .to(logo, 0.5, { ease: Back.easeIn, scale: 1.25 })
+      const navTl = new Timeline().staggerFrom(
+        [...search, ...nav],
+        ROUTE_ENTER_DURATION,
+        {
+          autoAlpha: 0,
+          ...direction,
+          ease: Power2.easeOut
+        },
+        0.25
+      )
 
       return new Promise((onComplete) => {
-        new Timeline({ onComplete }).add(homeTl).add(defaultTl, `-=0.75`)
+        new Timeline({ onComplete })
+          .add(defaultTl)
+          .add(logoTl)
+          .add(navTl, `-=1`)
       })
     },
-    leave: (el: HTMLElement) => {
-      const defaultTl = defaultLeaveTimeline(el, route)
-      const homeTl = new Timeline()
+    leave: () => {
+      const direction = getDirection(route.from.fullPath)
+      const logoTl = new Timeline()
         .to(logo, 1, { y: 0, ease: Power2.easeOut })
         .to(logo, 0.5, { ease: Back.easeIn, scale: 1 })
+      const navTl = new Timeline().staggerTo(
+        [...search, ...nav],
+        ROUTE_ENTER_DURATION,
+        {
+          autoAlpha: 0,
+          ...direction,
+          ease: Power2.easeOut
+        },
+        0.25
+      )
 
       return new Promise((onComplete) => {
-        new Timeline({ onComplete }).add(defaultTl).add(homeTl, `-=${ROUTE_LEAVE_DURATION / 2}`)
+        new Timeline({ onComplete }).add(navTl).add(logoTl, `-=1.25`)
       })
     }
   }
