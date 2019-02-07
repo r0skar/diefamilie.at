@@ -1,5 +1,6 @@
 import { percentageDiff } from './percentageDiff'
 import { types } from 'typestyle'
+import axios from 'axios'
 import sample from 'lodash/sample'
 
 /**
@@ -74,3 +75,16 @@ export const placeholder = (
     `
   }
 }
+
+/**
+ * Create axios request helper to communicate with the CMS backend.
+ */
+export const api = axios.create({
+  baseURL: process.env.VUE_APP_DATO_API_ENDPOINT,
+  headers: {
+    Authorization: process.env.VUE_APP_DATO_API_TOKEN,
+    Accept: `application/json`,
+    'Content-Type': `application/json`,
+    'X-Api-Version': `2`
+  }
+})

@@ -3,15 +3,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Store, useStore } from '~src/store'
+import { Tween } from '~src/global/animation'
 import { css, design } from '~src/design'
 import SimpleDrawingBoard from 'simple-drawing-board'
 
 @Component
 export default class DrawingBoard extends Vue {
-  private drawingBoard!: any
+  private store: Store = useStore(this.$store)
 
-  private boardConfig = {
+  private board!: any
+
+  private timeout!: any
+
+  private drawing!: string
+
+  private status = ``
+
+  private delay = 500
+
+  private config = {
     lineSize: 3,
     lineColor: design.colors.brand,
     historyDepth: 1
@@ -30,6 +42,7 @@ export default class DrawingBoard extends Vue {
 
   public styles = {
     board: css({
+      ...design.Utils.autoAlpha(0),
       height: `100vh`,
       position: `fixed`,
       pointerEvents: `none`,
@@ -38,13 +51,32 @@ export default class DrawingBoard extends Vue {
     })
   }
 
-  public mounted() {
-    this.drawingBoard = new SimpleDrawingBoard(this.$el, this.boardConfig)
+  @Watch(`status`)
+  private statusChanged(next: string, prev: string) {
+    const canceled = prev === `canceled`
+    const stopped = next === `mouseUp` && prev === `mouseMove`
+    const active = (prev === `mouseDown` || prev === `mouseMove`) && next === `mouseMove`
+
+    if (active && this.timeout) {
+      clearTimeout(this.timeout)
+    } else if (stopped || canceled) {
+      this.timeout = setTimeout(this.saveDrawing, this.delay)
+    }
+  }
+
+  public async mounted() {
+    this.board = new SimpleDrawingBoard(this.$el, this.config)
+    this.drawing = await this.store.cms.fetchDrawing()
+
+    this.board.setImg(this.drawing, false, true)
     this.events.forEach(this.addEvent)
+
+    Tween.to(this.$el, 4, { autoAlpha: 1 })
   }
 
   public destroyed() {
     this.events.forEach(this.removeEvent)
+    this.board.dispose()
   }
 
   private addEvent(type: string) {
@@ -53,6 +85,25 @@ export default class DrawingBoard extends Vue {
 
   private removeEvent(type: string) {
     return window.removeEventListener(type, (ev) => this.captureEvent(type, ev))
+  }
+
+  private updateStatus(type: string) {
+    switch (type) {
+      case `mousedown`:
+      case `touchstart`:
+        this.status = `mouseDown`
+        break
+      case `mousemove`:
+      case `touchmove`:
+        this.status = `mouseMove`
+        break
+      case `mouseup`:
+      case `touchend`:
+      case `touchcancel`:
+      case `gesturestart`:
+        this.status = `mouseUp`
+        break
+    }
   }
 
   private captureEvent(type: string, ev: Event) {
@@ -66,7 +117,31 @@ export default class DrawingBoard extends Vue {
 
     const event = new MouseEvent(type, { bubbles: false, cancelable: false, clientX, clientY })
 
+    this.updateStatus(type)
+
     this.$el.dispatchEvent(event)
+  }
+
+  private async saveDrawing() {
+    let status!: number
+    let drawing = this.board.getImg()
+
+    // Skip saving is nothing changed.
+    if (drawing === this.drawing) return
+
+    // Merge the new drawing with the original one.
+    const saved = await this.store.cms.fetchDrawing()
+
+    this.board.setImg(saved, false, false)
+    this.board.setImg(drawing, true, false)
+
+    // Save the merged drawing.
+    await this.$nextTick(async () => {
+      drawing = this.board.getImg()
+      status = await this.store.cms.saveDrawing(drawing)
+    })
+
+    return status
   }
 }
 </script>
