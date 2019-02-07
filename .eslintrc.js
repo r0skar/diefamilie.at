@@ -1,4 +1,4 @@
-const Path = require(`path`)
+const path = require(`path`)
 const isProduction = process.env.NODE_ENV === `production`
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
   },
   parserOptions: {
     parser: `@typescript-eslint/parser`,
-    project: Path.join(__dirname, `./tsconfig.json`)
+    project: path.join(__dirname, `./tsconfig.json`)
   },
   plugins: [`sort-imports-es6-autofix`],
   extends: [`plugin:vue/recommended`, `eslint:recommended`, `@vue/typescript`],

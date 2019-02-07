@@ -20,12 +20,12 @@
     { "language": "html", "autoFix": true }
   ],
   "eslint.options": {
-    "ignorePath": "/home/oskar/dev/vue-dato-boilerplate/.gitignore"
+    "ignorePath": "/home/oskar/dev/diefamilie.at/.gitignore"
   },
 
   // Prettier
   "prettier.disableLanguages": ["html"],
-  "prettier.ignorePath": "/home/oskar/dev/vue-dato-boilerplate/.gitignore",
+  "prettier.ignorePath": "/home/oskar/dev/diefamilie.at/.gitignore",
   "prettier.requireConfig": true,
   // Run eslint & stylelint AFTER formatting with prettier.
   "prettier.stylelintIntegration": false,
@@ -48,6 +48,6 @@
   "css.validate": false,
   "scss.validate": false,
   "stylelint.configOverrides": {
-    "ignorePath": "/home/oskar/dev/vue-dato-boilerplate/.gitignore"
+    "ignorePath": "/home/oskar/dev/diefamilie.at/.gitignore"
   }
 }
