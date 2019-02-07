@@ -75,7 +75,7 @@ export default class BaseGrid extends Vue {
 
     return css(
       { width: `100%` },
-      media({ minWidth: design.breakpoints.md }, { width: this.cols > 1 ? `50%` : `100%` }),
+      media({ minWidth: design.breakpoints.sm }, { width: this.cols > 1 ? `50%` : `100%` }),
       media({ minWidth: design.breakpoints.lg }, { width })
     )
   }
