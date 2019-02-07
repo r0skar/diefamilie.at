@@ -138,6 +138,7 @@ module.exports = (dato) => {
     lang: dato.site.locales[0],
     url: dato.site.entity.frontendUrl,
     name: dato.site.globalSeo.siteName,
+    email: dato.configuration.email,
     logo: datoImage(dato.configuration.logo),
     titleSuffix: dato.site.globalSeo.titleSuffix,
     globalMeta: createMetaTags(dato.site.globalSeo.fallbackSeo),

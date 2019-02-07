@@ -79,6 +79,7 @@ declare namespace Cms {
   type Block = ImageBlock & ProjectListBlock & CardBlock & VideoBlock
 
   interface Settings {
+    email: string
     lang: string
     url?: any
     name: string
