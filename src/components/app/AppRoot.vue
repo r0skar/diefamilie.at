@@ -1,6 +1,7 @@
 <template>
   <div id="app"
        :class="styles.app">
+    <DrawingBoard v-if="isHome" />
     <AppHeader :class="styles.header" />
     <AppMain :class="[styles.main, mainSpacing]" />
     <AppFooter :class="[styles.footer, footerVisibility]" />
@@ -18,12 +19,14 @@ import { css, design } from '~src/design'
 import AppFooter from './AppFooter.vue'
 import AppHeader from './AppHeader.vue'
 import AppMain from './AppMain.vue'
+import DrawingBoard from '~src/components/DrawingBoard.vue'
 
 @Component({
   components: {
     AppFooter,
     AppHeader,
-    AppMain
+    AppMain,
+    DrawingBoard
   }
 })
 export default class App extends Vue {
@@ -87,13 +90,14 @@ export default class App extends Vue {
     })
   }
 
-  private get showFooter() {
-    const { to, from, status } = this.store.app.router
+  private get isHome() {
+    return this.store.app.router.to.fullPath === `/`
+  }
 
-    return (
-      (to.fullPath !== `/` && status === `hasEntered`) ||
-      (from.fullPath !== `/` && to.fullPath !== `/`)
-    )
+  private get showFooter() {
+    const { from, status } = this.store.app.router
+
+    return (!this.isHome && status === `hasEntered`) || (from.fullPath !== `/` && !this.isHome)
   }
 
   private get mainSpacing() {

@@ -3,10 +3,10 @@
     <div :class="styles.container">
       <div id="search"
            :class="styles.search.container">
-        <AppSearch
-          :class="styles.search.form"
-          @focus="searchFocused = true"
-          @blur="searchFocused = false" />
+        <AppSearch ref="form"
+                   :class="styles.search.form"
+                   @focus="searchFocused = true"
+                   @blur="searchFocused = false" />
         <div :class="styles.search.placeholder">
           <div ref="placeholder"
                v-text="`SUCHE`" />
@@ -45,7 +45,9 @@ export default class HomeView extends Mixins(ViewMixin) {
   public styles = {
     container: css({
       height: `calc(100vh - (${design.appHeaderHeight} * 2))`,
-      position: `relative`
+      position: `relative`,
+      // Disable all selection in order to not interfere with the drawing board.
+      userSelect: `none`
     }),
     search: {
       container: css(
@@ -82,13 +84,14 @@ export default class HomeView extends Mixins(ViewMixin) {
 
   @Watch(`searchFocused`)
   private toggleFakePlaceholder(isFocused: boolean) {
-    const { placeholder, seperator } = this.$refs as any
+    const { form, placeholder, seperator } = this.$refs as any
+    const { keyword } = form
 
     if (isFocused) {
       new Timeline()
         .to(placeholder, 0.25, { autoAlpha: 0 })
         .to(seperator, 0.5, { width: `100%` }, `-=0.25`)
-    } else {
+    } else if (!keyword) {
       new Timeline()
         .to(placeholder, 0.25, { autoAlpha: 1 })
         .to(seperator, 0.5, { width: 0 }, `-=0.25`)
