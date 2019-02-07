@@ -79,7 +79,7 @@ const homeTransition = (route: IRoute): { enter: ITransition; leave: ITransition
   const logo = document.querySelector(`#logo`)!
   const search = [document.querySelector(`#search`)!]
   const nav = Array.from(document.querySelectorAll(`#nav ul li`))
-  const y = `${(100 - Number(design.Utils.stripUnit(design.appHeaderHeight))) / 2}vh`
+  const y = `${(100 - parseInt(design.appHeaderHeight)) / 2}vh`
 
   return {
     enter: (el: HTMLElement) => {
@@ -107,13 +107,15 @@ const homeTransition = (route: IRoute): { enter: ITransition; leave: ITransition
       })
     },
     leave: () => {
-      const direction = getDirection(route.from.fullPath)
+      // TODO: Use this to always mv out to the default dir
+      // const direction = getDirection(route.from.fullPath)
+      const direction = getDirection(route.to.fullPath)
       const logoTl = new Timeline()
         .to(logo, 1, { y: 0, ease: Power2.easeOut })
         .to(logo, 0.5, { ease: Back.easeIn, scale: 1 })
       const navTl = new Timeline().staggerTo(
         [...search, ...nav],
-        ROUTE_ENTER_DURATION,
+        ROUTE_LEAVE_DURATION,
         {
           autoAlpha: 0,
           ...direction,
@@ -123,7 +125,7 @@ const homeTransition = (route: IRoute): { enter: ITransition; leave: ITransition
       )
 
       return new Promise((onComplete) => {
-        new Timeline({ onComplete }).add(navTl).add(logoTl, `-=1.25`)
+        new Timeline({ onComplete }).add(navTl).add(logoTl, `-=0.75`)
       })
     }
   }

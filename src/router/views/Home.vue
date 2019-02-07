@@ -72,7 +72,7 @@ export default class HomeView extends Mixins(ViewMixin) {
         {
           ...this.itemContainer,
           left: `calc((100% - ${this.itemWidth}) / 2)`,
-          top: `calc((${this.itemWidth} / 2) * -1)`
+          top: `calc((${design.appHeaderHeight} / 2) * -1)`
         },
         media(
           { maxWidth: design.breakpoints.sm },
@@ -110,7 +110,7 @@ export default class HomeView extends Mixins(ViewMixin) {
           transform: `rotate(90deg)`
         },
         'ul > li:nth-child(2)': {
-          bottom: `calc((${this.itemWidth} / 2) * -1)`,
+          bottom: `calc((${design.appHeaderHeight} / 2) * -1)`,
           left: `calc((100% - ${this.itemWidth}) / 2)`
         },
         'ul > li:nth-child(3)': {

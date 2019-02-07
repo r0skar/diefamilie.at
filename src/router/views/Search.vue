@@ -13,9 +13,18 @@
     </BaseGrid>
   </div>
   <div v-else>
-    <p>
-      No results...
-    </p>
+    <BaseArticle>
+      <template v-slot:header>
+        <h1>
+          Keine Treffer
+        </h1>
+      </template>
+      <template v-slot:body>
+        <p>
+          Deine Suche ergab leider keinen Treffer.
+        </p>
+      </template>
+    </BaseArticle>
   </div>
 </template>
 

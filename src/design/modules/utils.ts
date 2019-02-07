@@ -1,4 +1,4 @@
-import { baseRatio } from './variables'
+import { baseRatio, tracking } from './variables'
 import { clearFix, ellipsis, modularScale, stripUnit } from 'polished'
 import { types } from 'typestyle'
 
@@ -63,6 +63,7 @@ export const headline = (
 
   return {
     fontSize,
+    letterSpacing: tracking.narrow,
     lineHeight: resetLineHeight ? 1.15 : `inherit`,
     marginBottom: bottomSpacing ? ms(1) : undefined
   }
