@@ -15,7 +15,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Store, useStore } from '~src/store'
 import { cms } from '~src/global/utils'
-import { css } from '~src/design'
+import { css, design, media } from '~src/design'
 
 @Component
 export default class AppLogo extends Vue {
@@ -25,10 +25,13 @@ export default class AppLogo extends Vue {
     container: css({
       userSelect: `none`
     }),
-    image: css({
-      maxWidth: `185px`,
-      width: `50vw`
-    })
+    image: css(
+      {
+        maxWidth: `125px`,
+        width: `50vw`
+      },
+      media({ minWidth: design.breakpoints.sm }, { maxWidth: `185px` })
+    )
   }
 
   private get name() {
