@@ -8,6 +8,11 @@ declare module 'vue/types/vue' {
      * The `styles` data property is being used as parent object
      * for the component's `typestyle` CSS modules.
      */
-    styles?: { [key: string]: string | types.NestedCSSProperties }
+    styles?: {
+      [key: string]:
+        | string
+        | types.NestedCSSProperties
+        | { [key: string]: string | types.NestedCSSProperties }
+    }
   }
 }
