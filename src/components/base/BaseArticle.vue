@@ -29,6 +29,9 @@ export default class BaseArticle extends Vue {
         h2: design.Utils.headline(`h2`, false, false),
         h3: design.Utils.headline(`h3`, false, false),
         h4: design.Utils.headline(`h4`, false, false),
+        p: {
+          lineHeight: design.Utils.ms(1.5)
+        },
         'p:not(:last-child), ul:not(:last-child), ol:not(:last-child), table:not(:last-child)': {
           marginBottom: design.Utils.ms(1)
         },
