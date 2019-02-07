@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app"
+       :class="styles.app">
     <AppHeader :class="styles.header" />
     <AppMain :class="[styles.main, mainSpacing]" />
     <AppFooter :class="[styles.footer, footerVisibility]" />
@@ -25,6 +26,9 @@ export default class App extends Vue {
   private store: Store = useStore(this.$store)
 
   public styles = {
+    app: css({
+      overflowX: `hidden`
+    }),
     header: css({
       height: design.appHeaderHeight
     }),
