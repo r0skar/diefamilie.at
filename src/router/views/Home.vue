@@ -24,9 +24,9 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { CssProps, css, design, media } from '~src/design'
 import { Timeline, Tween } from '~src/global/animation'
 import { ViewMixin } from '~src/global/mixins'
+import { css, design, media } from '~src/design'
 import { mouseProximity } from '~src/global/utils'
 import AppNav from '~src/components/app/AppNav.vue'
 import AppSearch from '~src/components/app/AppSearch.vue'
@@ -40,28 +40,7 @@ import AppSearch from '~src/components/app/AppSearch.vue'
 export default class HomeView extends Mixins(ViewMixin) {
   private searchFocused = false
 
-  private itemWidth = `60%`
-
-  private itemContainer: CssProps = {
-    display: `block`,
-    position: `absolute`,
-    textAlign: `center`,
-    width: this.itemWidth
-  }
-
-  private itemContent: CssProps = {
-    ...design.Utils.headline(`h3`),
-    background: `none`,
-    cursor: `pointer`,
-    fontWeight: design.fontWeights.light,
-    letterSpacing: design.tracking.wide,
-    display: `block`,
-    textAlign: `center`,
-    textDecoration: `none`,
-    textTransform: `uppercase`,
-    userSelect: `none`,
-    width: `100%`
-  }
+  private homeIntro = design.Utils.homeIntro()
 
   public styles = {
     container: css({
@@ -70,27 +49,17 @@ export default class HomeView extends Mixins(ViewMixin) {
     }),
     search: {
       container: css(
-        {
-          ...this.itemContainer,
-          left: `calc((100% - ${this.itemWidth}) / 2)`,
-          top: `calc((${design.appHeaderHeight} / 2) * -1)`
-        },
-        media(
-          { maxWidth: design.breakpoints.sm },
-          {
-            left: 0,
-            width: `100%`
-          }
-        )
+        { ...this.homeIntro.container(1) },
+        media({ maxWidth: design.breakpoints.sm }, { left: 0, width: `100%` })
       ),
       form: css({
         ...design.Utils.coverParent,
-        $nest: { '> input': this.itemContent }
+        $nest: { '> input': this.homeIntro.content }
       }),
       placeholder: css({
         ...design.Utils.coverParent,
         pointerEvents: `none`,
-        $nest: { '> div:first-child': this.itemContent }
+        $nest: { '> div:first-child': this.homeIntro.content }
       }),
       seperator: css({
         backgroundColor: design.colors.text,
@@ -101,26 +70,12 @@ export default class HomeView extends Mixins(ViewMixin) {
     },
     nav: css({
       $nest: {
-        'ul > li': this.itemContainer,
-        'ul > li > a': this.itemContent,
-        'ul > li:nth-child(1)': {
-          right: `calc((${this.itemWidth} / 2) * -1)`,
-          top: `calc(50% - 0.5rem)`
-        },
-        'ul > li:nth-child(1) a': {
-          transform: `rotate(90deg)`
-        },
-        'ul > li:nth-child(2)': {
-          bottom: `calc((${design.appHeaderHeight} / 2) * -1)`,
-          left: `calc((100% - ${this.itemWidth}) / 2)`
-        },
-        'ul > li:nth-child(3)': {
-          left: `calc((${this.itemWidth} / 2) * -1)`,
-          top: `calc(50% - 0.5rem)`
-        },
-        'ul > li:nth-child(3) a': {
-          transform: `rotate(-90deg)`
-        }
+        'ul > li > a': this.homeIntro.content,
+        'ul > li:nth-child(1)': this.homeIntro.container(2),
+        'ul > li:nth-child(1) a': { transform: `rotate(90deg)` },
+        'ul > li:nth-child(2)': this.homeIntro.container(3),
+        'ul > li:nth-child(3)': this.homeIntro.container(4),
+        'ul > li:nth-child(3) a': { transform: `rotate(-90deg)` }
       }
     })
   }

@@ -1,4 +1,4 @@
-import { baseRatio, tracking } from './variables'
+import { appHeaderHeight, baseRatio, fontWeights, tracking } from './variables'
 import { clearFix, ellipsis, modularScale, stripUnit } from 'polished'
 import { types } from 'typestyle'
 
@@ -66,6 +66,54 @@ export const headline = (
     letterSpacing: tracking.narrow,
     lineHeight: resetLineHeight ? 1.15 : `inherit`,
     marginBottom: bottomSpacing ? ms(1) : undefined
+  }
+}
+
+/**
+ * Generate styles for the home intro.
+ * `index` starts at `1`, because `nth-child` counting does too.
+ */
+export const homeIntro = (): {
+  container: (index: number) => types.NestedCSSProperties
+  content: types.NestedCSSProperties
+} => {
+  const itemWidth = `60%`
+
+  return {
+    container: (index) => {
+      const x = `calc((${itemWidth} / 2) * -1)`
+      const y = `calc((${appHeaderHeight} / 2) * -1)`
+      const centerX = `calc((100% - ${itemWidth}) / 2)`
+      const centerY = `calc(50% - 0.5rem)`
+
+      let position!: types.NestedCSSProperties
+
+      if (index === 1) position = { left: centerX, top: y }
+      if (index === 2) position = { right: x, top: centerY }
+      if (index === 3) position = { bottom: y, left: centerX }
+      if (index === 4) position = { left: x, top: centerY }
+
+      return {
+        ...position,
+        display: `block`,
+        position: `absolute`,
+        textAlign: `center`,
+        width: itemWidth
+      }
+    },
+    content: {
+      ...headline(`h3`),
+      background: `none`,
+      cursor: `pointer`,
+      fontWeight: fontWeights.light,
+      letterSpacing: tracking.wide,
+      display: `block`,
+      textAlign: `center`,
+      textDecoration: `none`,
+      textTransform: `uppercase`,
+      userSelect: `none`,
+      width: `100%`
+    }
   }
 }
 
