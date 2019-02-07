@@ -16,12 +16,16 @@
     <BaseArticle>
       <template v-slot:header>
         <h1>
-          Keine Treffer
+          Ohje...
         </h1>
       </template>
       <template v-slot:body>
         <p>
-          Deine Suche ergab leider keinen Treffer.
+          Deine Suche ergab leider keinen Treffer.  Wenn du eine Frage zur Familie hast,
+          <BaseLink to="/contact"
+                    v-text="`kontaktiere uns`" /> am besten direkt! Ansonsten, schau dich doch bei
+          <BaseLink to="/projects"
+                    v-text="`unseren Projekten`" /> um.
         </p>
       </template>
     </BaseArticle>
