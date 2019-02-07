@@ -48,12 +48,12 @@ export default class DrawingBoard extends Vue {
     })
   }
 
-  private get localDrawing() {
-    return window.sessionStorage.getItem(`diefamilie-drawing`) || this.board.getImg()
-  }
-
   private set localDrawing(drawing: string) {
     window.sessionStorage.setItem(`diefamilie-drawing`, drawing)
+  }
+
+  private get localDrawing() {
+    return window.sessionStorage.getItem(`diefamilie-drawing`) || this.board.getImg()
   }
 
   @Watch(`status`)
