@@ -56,7 +56,7 @@ export const headline = (
   bottomSpacing = false
 ): types.NestedCSSProperties => {
   let fontSize = ms(3)
-  let letterSpacing = tracking.normal
+  let letterSpacing!: string
 
   if (type === `h1`) letterSpacing = tracking.narrow
   if (type === `h2`) fontSize = ms(2)
