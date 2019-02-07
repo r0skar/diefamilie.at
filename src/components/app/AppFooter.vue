@@ -1,8 +1,8 @@
 <template>
   <footer>
     <div :class="styles.wrap">
-      <AppContact />
-      <AppInfo />
+      <AppContact :class="styles.contact" />
+      <AppInfo :class="styles.info" />
     </div>
   </footer>
 </template>
@@ -25,7 +25,17 @@ export default class AppFooter extends Vue {
       ...design.Utils.wrap(design.appWidth, `84%`, `center`),
       ...design.Utils.fillParentHeight,
       ...design.Utils.vAlign,
+      position: `relative`
+    }),
+    contact: css({
       textAlign: `center`
+    }),
+    info: css({
+      bottom: design.Utils.ms(1),
+      right: 0,
+      position: `absolute`,
+      textAlign: `right`,
+      width: `100%`
     })
   }
 }

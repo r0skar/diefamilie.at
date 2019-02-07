@@ -44,6 +44,7 @@ export const colors = {
   bg: `#fafafa`,
   text: `#222222`,
   brand: `#ffefc6`,
+  brandMuted: `#b59646`,
   white: `#ffffff`,
   black: `#000000`
 }
@@ -72,7 +73,7 @@ export const appHeaderHeight = `30vh`
 /**
  * App footer height.
  */
-export const appFooterHeight = `25vh`
+export const appFooterHeight = `30vh`
 
 /**
  * Max width of content elements that contain mainly text.
