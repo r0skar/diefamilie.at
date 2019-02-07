@@ -4,6 +4,10 @@
     <AppHeader :class="styles.header" />
     <AppMain :class="[styles.main, mainSpacing]" />
     <AppFooter :class="[styles.footer, footerVisibility]" />
+    <div :class="styles.borders">
+      <div v-for="(border, index) in borders"
+           :key="index" />
+    </div>
   </div>
 </template>
 
@@ -25,9 +29,10 @@ import AppMain from './AppMain.vue'
 export default class App extends Vue {
   private store: Store = useStore(this.$store)
 
+  private borders = [`top`, `right`, `bottom`, `left`]
+
   public styles = {
     app: css({
-      // overflow: `hidden`,
       minHeight: `100vh`,
       width: `100%`
     }),
@@ -46,6 +51,39 @@ export default class App extends Vue {
       position: `fixed`,
       width: `100%`,
       zIndex: -1
+    }),
+    borders: css({
+      $nest: {
+        '> div': {
+          backgroundColor: design.colors.white,
+          position: `fixed`,
+          zIndex: 9999
+        },
+        '> div:nth-child(odd)': {
+          height: design.Utils.ms(0),
+          width: `100%`
+        },
+        '> div:nth-child(even)': {
+          height: `100%`,
+          width: design.Utils.ms(0)
+        },
+        '> div:nth-child(1)': {
+          top: 0,
+          left: 0
+        },
+        '> div:nth-child(2)': {
+          right: 0,
+          top: 0
+        },
+        '> div:nth-child(3)': {
+          bottom: 0,
+          left: 0
+        },
+        '> div:nth-child(4)': {
+          left: 0,
+          top: 0
+        }
+      }
     })
   }
 
