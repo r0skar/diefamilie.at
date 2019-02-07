@@ -25,8 +25,9 @@
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { CssProps, css, design, media } from '~src/design'
-import { Timeline } from '~src/global/animation'
+import { Timeline, Tween } from '~src/global/animation'
 import { ViewMixin } from '~src/global/mixins'
+import { mouseProximity } from '~src/global/utils'
 import AppNav from '~src/components/app/AppNav.vue'
 import AppSearch from '~src/components/app/AppSearch.vue'
 
@@ -137,6 +138,36 @@ export default class HomeView extends Mixins(ViewMixin) {
         .to(placeholder, 0.25, { autoAlpha: 1 })
         .to(seperator, 0.5, { width: 0 }, `-=0.25`)
     }
+  }
+
+  public mounted() {
+    window.addEventListener(`mousemove`, this.tweenLogo as EventListener)
+  }
+
+  public destroyed() {
+    window.removeEventListener(`mousemove`, this.tweenLogo as EventListener)
+  }
+
+  private tweenLogo(ev: MouseEvent) {
+    const target = document.querySelector(`#logo img`)!
+
+    // On page load it can happen, that the image is
+    // no yet loaded when the user starts moving the mouse.
+    if (!target) return
+
+    mouseProximity(ev, target, {
+      center: true,
+      onProgress: (x: number, y: number) => {
+        const distanceY: number = Math.max(-5, Math.min(y / 80, 5))
+        const distanceX: number = Math.max(-5, Math.min(x / 200, 5)) * -1
+
+        return Tween.to(target, 0, {
+          transformPerspective: 25,
+          rotationY: distanceX,
+          rotationX: distanceY
+        })
+      }
+    })
   }
 }
 </script>
