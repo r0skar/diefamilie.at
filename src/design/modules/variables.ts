@@ -16,7 +16,7 @@ export const fontSerif = `serif`
  */
 export const fontSizeRange = {
   min: 14,
-  max: 22
+  max: 20
 }
 
 /**
@@ -26,6 +26,15 @@ export const fontWeights = {
   light: 300,
   normal: 400,
   bold: 500
+}
+
+/**
+ * Letter spacing.
+ */
+export const tracking = {
+  narrow: `-0.2rem`,
+  normal: `normal`,
+  wide: `0.2rem`
 }
 
 /**
