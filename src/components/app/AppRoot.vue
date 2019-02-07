@@ -1,6 +1,6 @@
 <template>
   <div id="app"
-       :class="styles.app">
+       :class="[styles.app, appInteractivity]">
     <DrawingBoard v-if="isHome" />
     <AppHeader :class="styles.header" />
     <AppMain :class="[styles.main, mainSpacing]" />
@@ -104,6 +104,16 @@ export default class App extends Vue {
     return css({
       marginBottom: this.showFooter ? design.appFooterHeight : undefined,
       paddingBottom: this.showFooter ? `calc(${design.appHeaderHeight} / 2)` : undefined
+    })
+  }
+
+  private get appInteractivity() {
+    const { status } = this.store.app.router
+    const isInteractive = status !== `hasEntered` ? `none` : `auto`
+
+    return css({
+      pointerEvents: isInteractive,
+      userSelect: isInteractive
     })
   }
 
