@@ -1,5 +1,5 @@
 import { Action, Getter, State } from 'vuex-simple'
-import { cms, includesString } from '~src/global/utils'
+import { includesString } from '~src/global/utils'
 import CONTENT from '~cms/content.json'
 import ROUTES from '~cms/routes.json'
 import SETTINGS from '~cms/settings.json'
@@ -39,28 +39,6 @@ export class CmsModule {
   @Getter()
   public get archivedProjects() {
     return this.allProjects.filter((p) => p.archived)
-  }
-
-  /**
-   * Return the current drawing for the drawing board.
-   */
-  @Action()
-  public async fetchDrawing() {
-    const { data } = await cms.api.get(`443356`)
-    const { drawing } = data.data.attributes
-
-    return drawing
-  }
-
-  /**
-   * Save a `base64` string as new drawing.
-   */
-  @Action()
-  public async saveDrawing(drawing: string) {
-    const data = { type: `item`, id: `443356`, attributes: { drawing } }
-    const { status } = await cms.api.put(`443356`, { data })
-
-    return status
   }
 
   /**

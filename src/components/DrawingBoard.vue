@@ -4,24 +4,21 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Store, useStore } from '~src/store'
 import { Tween } from '~src/global/animation'
 import { css, design } from '~src/design'
+import { fetchDrawing, saveDrawing } from '~src/global/api'
+import { sleep } from '~src/global/utils'
 import SimpleDrawingBoard from 'simple-drawing-board'
 
 @Component
 export default class DrawingBoard extends Vue {
-  private store: Store = useStore(this.$store)
-
   private board!: any
 
   private timeout!: any
 
-  private drawing!: string
-
   private status = ``
 
-  private delay = 500
+  private delay = 1500
 
   private config = {
     lineSize: 3,
@@ -51,11 +48,25 @@ export default class DrawingBoard extends Vue {
     })
   }
 
+  private get localDrawing() {
+    return window.sessionStorage.getItem(`diefamilie-drawing`) || this.board.getImg()
+  }
+
+  private set localDrawing(drawing: string) {
+    window.sessionStorage.setItem(`diefamilie-drawing`, drawing)
+  }
+
   @Watch(`status`)
   private statusChanged(next: string, prev: string) {
+    const drawing = this.board.getImg()
     const canceled = prev === `canceled`
     const stopped = next === `mouseUp` && prev === `mouseMove`
     const active = (prev === `mouseDown` || prev === `mouseMove`) && next === `mouseMove`
+
+    // Immediatly save the new drawing locally.
+    // Doing so, makes sure that all changes survive, even if
+    // the save timeout is canceled.
+    this.localDrawing = drawing
 
     if (active && this.timeout) {
       clearTimeout(this.timeout)
@@ -66,15 +77,20 @@ export default class DrawingBoard extends Vue {
 
   public async mounted() {
     this.board = new SimpleDrawingBoard(this.$el, this.config)
-    this.drawing = await this.store.cms.fetchDrawing()
+    const remote = await fetchDrawing()
 
-    this.board.setImg(this.drawing, false, true)
+    // Add the remote drawing as base and overlay the local drawing.
+    this.board.setImg(remote, false, false)
+    this.board.setImg(this.localDrawing, true, false)
+
     this.events.forEach(this.addEvent)
 
     Tween.to(this.$el, 4, { autoAlpha: 1 })
   }
 
   public destroyed() {
+    if (!this.timeout) this.saveDrawing()
+
     this.events.forEach(this.removeEvent)
     this.board.dispose()
   }
@@ -118,28 +134,28 @@ export default class DrawingBoard extends Vue {
     const event = new MouseEvent(type, { bubbles: false, cancelable: false, clientX, clientY })
 
     this.updateStatus(type)
-
     this.$el.dispatchEvent(event)
   }
 
   private async saveDrawing() {
-    let status!: number
-    let drawing = this.board.getImg()
+    // Immediatly return statusCode `200` if nothing changed.
+    if (this.localDrawing === this.board.getImg()) return 200
 
-    // Skip saving is nothing changed.
-    if (drawing === this.drawing) return
+    const remote = await fetchDrawing()
 
-    // Merge the new drawing with the original one.
-    const saved = await this.store.cms.fetchDrawing()
+    // Overlay the remote drawing over the local drawing.
+    this.board.setImg(remote, true, true)
 
-    this.board.setImg(saved, false, false)
-    this.board.setImg(drawing, true, false)
+    // We sleep by 0 to force the next call to be executed last.
+    // This ensures that `this.board.getImg()` returns the
+    // merged image instead of the old one.
+    await sleep(0)
 
-    // Save the merged drawing.
-    await this.$nextTick(async () => {
-      drawing = this.board.getImg()
-      status = await this.store.cms.saveDrawing(drawing)
-    })
+    const drawing = this.board.getImg()
+
+    // Save the drawing locally and remotely.
+    this.localDrawing = drawing
+    const status = await saveDrawing(drawing)
 
     return status
   }
