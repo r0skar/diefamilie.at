@@ -34,7 +34,7 @@ export default class BaseImage extends Vue {
   @Prop({ type: Boolean, default: false })
   private fill!: boolean
 
-  @Prop({ type: Object, default: () => ({ backgroundColor: design.colors.text }) })
+  @Prop({ type: Object, default: () => ({ backgroundColor: design.colors.bg }) })
   private placeholder!: CssProps
 
   @Prop({ type: Number, default: 1 })

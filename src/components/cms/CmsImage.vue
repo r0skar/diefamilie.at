@@ -20,8 +20,11 @@ export default class CmsImage extends Vue {
   @Prop({ type: Object, required: true })
   private image!: Cms.Image
 
+  @Prop({ type: Boolean, default: true })
+  private showPlaceholder!: boolean
+
   private get placeholder() {
-    return cms.placeholder(this.image)
+    return this.showPlaceholder ? cms.placeholder(this.image) : undefined
   }
 
   private imageLoaded(image: HTMLImageElement) {

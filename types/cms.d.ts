@@ -34,6 +34,7 @@ declare namespace Cms {
 
   interface ImageBlock extends DefaultBlock {
     image: Image
+    transparent?: boolean
     caption?: string
   }
 

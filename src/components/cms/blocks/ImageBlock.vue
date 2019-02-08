@@ -1,6 +1,7 @@
 <template>
   <CmsImage :image="block.image"
-            :caption="block.caption" />
+            :caption="block.caption"
+            :show-placeholder="!block.transparent" />
 </template>
 
 <script lang="ts">
