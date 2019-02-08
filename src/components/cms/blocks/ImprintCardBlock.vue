@@ -14,10 +14,10 @@ export default class ImprintCardBlock extends Mixins(BlockMixin) {
     return [
       { label: `Name`, value: name },
       { label: `Email`, value: email, to: `mailto:${email}` },
-      { label: `Telephone`, value: telephone, to: `mailto:${telephone}` },
+      { label: `Telefon`, value: telephone, to: `mailto:${telephone}` },
       { label: `UID`, value: uid },
-      { label: `Jurisdiction`, value: jurisdiction },
-      { label: `Branch`, value: branch }
+      { label: `Gerichtsstand`, value: jurisdiction },
+      { label: `Branche`, value: branch }
     ]
   }
 }

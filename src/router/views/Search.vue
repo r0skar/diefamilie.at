@@ -22,9 +22,9 @@
       <template v-slot:body>
         <p>
           Deine Suche ergab leider keinen Treffer.  Wenn du eine Frage zur Familie hast,
-          <BaseLink to="/contact"
+          <BaseLink to="/kontakt"
                     v-text="`kontaktiere uns`" /> am besten direkt! Ansonsten, schau dich doch bei
-          <BaseLink to="/projects"
+          <BaseLink to="/projekte"
                     v-text="`unseren Projekten`" /> um.
         </p>
       </template>
