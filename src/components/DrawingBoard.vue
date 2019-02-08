@@ -77,14 +77,16 @@ export default class DrawingBoard extends Vue {
 
   public async mounted() {
     this.board = new SimpleDrawingBoard(this.$el, this.config)
-    const remote = await fetchDrawing()
 
-    // Add the remote drawing as base and overlay the local drawing.
-    this.board.setImg(remote, false, false)
+    try {
+      const remote = await fetchDrawing()
+      this.board.setImg(remote, false, false)
+    } catch (e) {
+      console.error(`Failed to fetch drawing from server.`, e)
+    }
+
     this.board.setImg(this.localDrawing, true, false)
-
     this.events.forEach(this.addEvent)
-
     Tween.to(this.$el, 4, { autoAlpha: 1 })
   }
 
@@ -141,23 +143,27 @@ export default class DrawingBoard extends Vue {
     // Immediatly return statusCode `200` if nothing changed.
     if (this.localDrawing === this.board.getImg()) return 200
 
-    const remote = await fetchDrawing()
+    try {
+      const remote = await fetchDrawing()
 
-    // Overlay the remote drawing over the local drawing.
-    this.board.setImg(remote, true, true)
+      // Overlay the remote drawing over the local drawing.
+      this.board.setImg(remote, true, true)
 
-    // We sleep by 0 to force the next call to be executed last.
-    // This ensures that `this.board.getImg()` returns the
-    // merged image instead of the old one.
-    await sleep(0)
+      // We sleep by 0 to force the next call to be executed last.
+      // This ensures that `this.board.getImg()` returns the
+      // merged image instead of the old one.
+      await sleep(0)
 
-    const drawing = this.board.getImg()
+      const drawing = this.board.getImg()
 
-    // Save the drawing locally and remotely.
-    this.localDrawing = drawing
-    const status = await saveDrawing(drawing)
+      // Save the drawing locally and remotely.
+      this.localDrawing = drawing
+      const status = await saveDrawing(drawing)
 
-    return status
+      return status
+    } catch (e) {
+      console.error(`Failed to save drawing to server.`, e)
+    }
   }
 }
 </script>
