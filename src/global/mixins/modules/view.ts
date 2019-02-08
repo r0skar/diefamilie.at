@@ -22,7 +22,9 @@ export class ViewMixin extends Vue {
    * The current route's content.
    */
   public get content() {
-    return this.store.cms.content.find((i) => i.$path === this.$route.fullPath)
+    const { fullPath } = this.$route
+
+    return this.store.cms.content.find((i) => i.$path === fullPath || i.$path === `${fullPath}/`)
   }
 
   /**
