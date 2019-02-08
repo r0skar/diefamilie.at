@@ -91,7 +91,7 @@ function createDefaultPage(page, path = `/`, model = `page`, view = `Default`) {
     $updatedAt: page.updatedAt,
     $slug: page.slug,
     title: page.title,
-    meta: createMetaTags(page.meta),
+    meta: createMetaTags(page.seo),
     blocks: page.blocks ? createContentBlocks(page.blocks) : undefined
   }
 }
