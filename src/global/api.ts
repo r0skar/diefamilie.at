@@ -17,7 +17,7 @@ const API = axios.create({
  * Return the current drawing for the drawing board.
  */
 export const fetchDrawing = async () => {
-  const { data } = await API.get(`443356`)
+  const { data } = await API.get(process.env.VUE_APP_DRAWING_FIELD_ID)
   const { drawing } = data.data.attributes
 
   return drawing
@@ -27,8 +27,8 @@ export const fetchDrawing = async () => {
  * Save a `base64` string as new drawing.
  */
 export const saveDrawing = async (drawing: string) => {
-  const data = { type: `item`, id: `443356`, attributes: { drawing } }
-  const { status } = await API.put(`443356`, { data })
+  const data = { type: `item`, id: process.env.VUE_APP_DRAWING_FIELD_ID, attributes: { drawing } }
+  const { status } = await API.put(process.env.VUE_APP_DRAWING_FIELD_ID, { data })
 
   return status
 }
