@@ -9,11 +9,11 @@
           v-text="project.title" />
       <div ref="seperator"
            :class="styles.seperator" />
-      <ul ref="tags"
-          :class="styles.tags">
-        <li v-for="tag in project.tags"
-            :key="tag"
-            v-text="tag" />
+      <ul ref="categories"
+          :class="styles.categories">
+        <li v-for="category in project.categories"
+            :key="category"
+            v-text="category" />
       </ul>
     </div>
   </div>
@@ -79,11 +79,12 @@ export default class ProjectHeader extends Vue {
       marginBottom: design.Utils.ms(0),
       width: 0
     }),
-    tags: css({
+    categories: css({
       $nest: {
         '> li': {
           ...design.Utils.autoAlpha(0),
           display: `inline-block`,
+          textTransform: `lowercase`,
           transform: `translateX(-10vw)`
         },
         '> li:not(:last-child):after': {
@@ -97,12 +98,12 @@ export default class ProjectHeader extends Vue {
   }
 
   private imageLoaded() {
-    const { title, seperator, tags } = this.$refs as any
+    const { title, seperator, categories } = this.$refs as any
 
     new Timeline()
       .to(title, 1, { autoAlpha: 1, y: 0 })
       .to(seperator, 1, { autoAlpha: 1, width: `100%` }, `-=0.5`)
-      .staggerTo(tags.childNodes, 0.5, { autoAlpha: 1, x: 0 }, 0.1, `-=0.5`)
+      .staggerTo(categories.childNodes, 0.5, { autoAlpha: 1, x: 0 }, 0.1, `-=0.5`)
   }
 }
 </script>
