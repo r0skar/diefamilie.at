@@ -14,7 +14,7 @@ module.exports = {
   extends: [`plugin:vue/recommended`, `eslint:recommended`, `@vue/typescript`],
   rules: {
     // Add a warning when using console or debuggers during production.
-    'no-console': isProduction ? 1 : 0,
+    'no-console': isProduction ? [1, { allow: ['warn', 'error'] }] : 0,
     'no-debugger': isProduction ? 1 : 0,
 
     // Sort `import` statements.
