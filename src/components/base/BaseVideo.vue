@@ -70,7 +70,27 @@ export default class BaseVideo extends Vue {
       // If `animate` is true, keep the loaded video hidden
       // for the animation to kick in.
       ...(this.animate && design.Utils.autoAlpha(0)),
-      ...design.Utils.coverParent
+      ...design.Utils.coverParent,
+      $nest: {
+        '.plyr': {
+          ...design.Utils.fillParentHeight
+        },
+        '.plyr__video-wrapper, .plyr video': {
+          height: `100% !important`
+        },
+        '.plyr__controls': {
+          opacity: 0
+        },
+        '&:hover .plyr__controls': {
+          opacity: 1
+        },
+        '.plyr__control--overlaid, .plyr__control:hover': {
+          background: `${design.colors.text} !important`
+        },
+        '.plyr--full-ui input[type=range]': {
+          color: `${design.colors.text} !important`
+        }
+      }
     }),
     video: css({
       height: `100%`,
