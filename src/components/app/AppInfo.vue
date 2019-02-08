@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseLink to="/imprint"
+    <BaseLink to="/impressum"
               itemprop="url"
               :class="styles.link">
       <small>
