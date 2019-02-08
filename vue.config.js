@@ -21,10 +21,8 @@ module.exports = {
 
     /**
      * Add the prerenderer.
-     * Only run in production mode when the `modern` bundle is being
-     * build. This avoids running it twice for the `legacy` bundle.
      */
-    if (isProduction && process.env.VUE_CLI_MODERN_BUILD) {
+    if (isProduction) {
       config.plugin(`prerenderer`).use(PrerenderPlugin, [
         {
           routes: routesToPrerender,
