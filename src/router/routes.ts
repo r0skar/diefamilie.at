@@ -25,12 +25,12 @@ const staticRoutes: any = [
    * If no search term is specified, we redirect to the home page.
    */
   {
-    path: `/search`,
+    path: `/suche`,
     redirect: `/`
   },
   {
     name: `SearchView`,
-    path: `/search/:keyword`,
+    path: `/suche/:keyword`,
     props: true,
     component: () => import(`./views/Search.vue`)
   },
