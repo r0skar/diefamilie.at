@@ -3,6 +3,7 @@
     <BaseGrid v-if="results && results.length > 0"
               #default="{ item }"
               :cols="3"
+              :justify="`flex-start`"
               :items="results">
       <BaseLink :to="item.$path"
                 :class="styles.link">
