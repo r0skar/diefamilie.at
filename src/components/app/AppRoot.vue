@@ -47,7 +47,7 @@ export default class App extends Vue {
       minHeight: `calc(100vh - ${design.appHeaderHeight})`
     }),
     footer: css({
-      backgroundColor: design.colors.brand,
+      // backgroundColor: design.colors.brand,
       bottom: 0,
       left: 0,
       height: design.appFooterHeight,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4 :class="styles.title">
-      <BaseLink :to="email"
+      <BaseLink :to="`mailto:${email}`"
                 v-text="email" />
     </h4>
   </div>
@@ -19,7 +19,8 @@ export default class AppContact extends Vue {
   public styles = {
     title: css({
       ...design.Utils.headline(`h3`, true, false),
-      backgroundColor: design.colors.bg,
+      backgroundColor: design.colors.text,
+      color: design.colors.bg,
       fontWeight: design.fontWeights.bold,
       display: `inline-block`,
       clipPath: `polygon(0 0, 100% 20%, 100% 100%, 0 80%)`,

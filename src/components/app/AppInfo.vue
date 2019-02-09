@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { Store, useStore } from '~src/store'
-import { css, design } from '~src/design'
+import { css } from '~src/design'
 
 @Component
 export default class AppInfo extends Vue {
@@ -21,7 +21,7 @@ export default class AppInfo extends Vue {
 
   public styles = {
     link: css({
-      color: design.colors.brandMuted,
+      // color: design.colors.brandMuted,
       textDecoration: `none`,
       textTransform: `uppercase`
     })
