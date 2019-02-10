@@ -24,7 +24,10 @@ export default class AppContact extends Vue {
       fontWeight: design.fontWeights.bold,
       display: `inline-block`,
       clipPath: `polygon(0 0, 100% 20%, 100% 100%, 0 80%)`,
-      padding: design.Utils.ms(1)
+      padding: design.Utils.ms(1),
+      $nest: {
+        '> a': { textDecoration: `none` }
+      }
     })
   }
 
