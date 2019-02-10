@@ -73,7 +73,7 @@ export const appHeaderHeight = `30vh`
 /**
  * App footer height.
  */
-export const appFooterHeight = `30vh`
+export const appFooterHeight = `40vh`
 
 /**
  * Max width of content elements that contain mainly text.

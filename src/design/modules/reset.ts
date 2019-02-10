@@ -96,7 +96,7 @@ export const resetCss = () => {
       font-style: italic;
     }
     small {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
     audio,
     canvas,
