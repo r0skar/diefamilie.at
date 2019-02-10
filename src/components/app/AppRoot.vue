@@ -114,7 +114,7 @@ export default class App extends Vue {
   private get appInteractivity() {
     const { status } = this.store.app.router
     const isInteractive = status !== `hasEntered` ? `none` : `auto`
-    const overflow = status !== `hasEntered` ? `hidden` : `auto`
+    const overflow = status !== `hasEntered` || this.isHome ? `hidden` : `auto`
 
     return css({
       overflow,
