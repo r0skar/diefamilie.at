@@ -43,16 +43,23 @@ export default class HomeView extends Mixins(ViewMixin) {
   private homeIntro = design.Utils.homeIntro()
 
   public styles = {
-    container: css({
-      height: `calc(100vh - (${design.appHeaderHeight} * 2))`,
-      position: `relative`,
-      // Disable all selection in order to not interfere with the drawing board.
-      userSelect: `none`
-    }),
+    container: css(
+      {
+        height: `calc(100vh - (${design.appHeaderHeight} * 2))`,
+        position: `relative`,
+        userSelect: `none`
+      },
+      media(
+        { maxWidth: design.breakpoints.md },
+        {
+          transform: `translateY(${design.appHeaderHeight})`,
+          paddingTop: design.Utils.ms(1)
+        }
+      )
+    ),
     search: {
       container: css(
-        { ...this.homeIntro.container(1) },
-        media({ maxWidth: design.breakpoints.sm }, { left: 0, width: `100%` })
+        media({ minWidth: design.breakpoints.md }, { ...this.homeIntro.container(1) })
       ),
       form: css({
         ...design.Utils.coverParent,
@@ -63,23 +70,51 @@ export default class HomeView extends Mixins(ViewMixin) {
         pointerEvents: `none`,
         $nest: { '> div:first-child': this.homeIntro.content }
       }),
-      seperator: css({
-        backgroundColor: design.colors.text,
-        height: `1px`,
-        display: `inline-block`,
-        width: 0
-      })
+      seperator: css(
+        {
+          backgroundColor: design.colors.text,
+          height: `1px`,
+          display: `inline-block`,
+          width: 0
+        },
+        media(
+          { maxWidth: design.breakpoints.md },
+          {
+            display: `none`
+          }
+        )
+      )
     },
-    nav: css({
-      $nest: {
-        'ul > li > a': this.homeIntro.content,
-        'ul > li:nth-child(1)': this.homeIntro.container(2),
-        'ul > li:nth-child(1) a': { transform: `rotate(90deg)` },
-        'ul > li:nth-child(2)': this.homeIntro.container(3),
-        'ul > li:nth-child(3)': this.homeIntro.container(4),
-        'ul > li:nth-child(3) a': { transform: `rotate(-90deg)` }
-      }
-    })
+    nav: css(
+      {
+        $nest: {
+          'ul > li > a': this.homeIntro.content
+        }
+      },
+      media(
+        { maxWidth: design.breakpoints.md },
+        {
+          transform: `translateY(${design.Utils.ms(2.5)})`,
+          $nest: {
+            'ul > li:not(:last-child)': {
+              marginBottom: `${design.Utils.ms(1)} !important`
+            }
+          }
+        }
+      ),
+      media(
+        { minWidth: design.breakpoints.md },
+        {
+          $nest: {
+            'ul > li:nth-child(1)': this.homeIntro.container(2),
+            'ul > li:nth-child(1) a': { transform: `rotate(90deg)` },
+            'ul > li:nth-child(2)': this.homeIntro.container(3),
+            'ul > li:nth-child(3)': this.homeIntro.container(4),
+            'ul > li:nth-child(3) a': { transform: `rotate(-90deg)` }
+          }
+        }
+      )
+    )
   }
 
   @Watch(`searchFocused`)
