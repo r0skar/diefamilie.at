@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { IS_SSR } from '~src/global/constants'
 import { Store, useStore } from '~src/store'
 import { css, design } from '~src/design'
 import AppFooter from './AppFooter.vue'
@@ -95,7 +96,10 @@ export default class App extends Vue {
   }
 
   private get enableDrawingBoard() {
-    return this.isHome && window.innerWidth > design.breakpoints.md
+    // Always render canvas while prerendering, otherwhise the canvas element
+    // will no get "pinrted" to the html output and the drawing board cant use
+    // it as its mount point.
+    return !IS_SSR && this.isHome && window.innerWidth > design.breakpoints.md
   }
 
   private get showFooter() {
