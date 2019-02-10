@@ -22,16 +22,18 @@ export default class AppLogo extends Vue {
   private store: Store = useStore(this.$store)
 
   public styles = {
-    container: css({
-      userSelect: `none`
-    }),
-    image: css(
+    container: css(
       {
         maxWidth: `125px`,
+        margin: `auto`,
+        userSelect: `none`,
         width: `50vw`
       },
       media({ minWidth: design.breakpoints.sm }, { maxWidth: `185px` })
-    )
+    ),
+    image: css({
+      width: `100%`
+    })
   }
 
   private get name() {
