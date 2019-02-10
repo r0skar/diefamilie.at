@@ -1,7 +1,7 @@
 <template>
   <div id="app"
        :class="[styles.app, appInteractivity]">
-    <DrawingBoard v-if="isHome" />
+    <DrawingBoard v-if="enableDrawingBoard" />
     <AppHeader :class="styles.header" />
     <AppMain :class="[styles.main, mainSpacing]" />
     <AppFooter :class="[styles.footer, footerVisibility]" />
@@ -94,6 +94,10 @@ export default class App extends Vue {
     return this.store.app.router.to.fullPath === `/`
   }
 
+  private get enableDrawingBoard() {
+    return this.isHome && window.innerWidth > design.breakpoints.md
+  }
+
   private get showFooter() {
     const { from, status } = this.store.app.router
 
@@ -110,8 +114,10 @@ export default class App extends Vue {
   private get appInteractivity() {
     const { status } = this.store.app.router
     const isInteractive = status !== `hasEntered` ? `none` : `auto`
+    const overflow = status !== `hasEntered` ? `hidden` : `auto`
 
     return css({
+      overflow,
       pointerEvents: isInteractive,
       userSelect: isInteractive
     })
