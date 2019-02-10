@@ -99,7 +99,7 @@ export default class App extends Vue {
     // Always render canvas while prerendering, otherwhise the canvas element
     // will no get "pinrted" to the html output and the drawing board cant use
     // it as its mount point.
-    return !IS_SSR && this.isHome && window.innerWidth > design.breakpoints.md
+    return (IS_SSR && this.isHome) || (this.isHome && window.innerWidth > design.breakpoints.md)
   }
 
   private get showFooter() {
