@@ -9,6 +9,10 @@ export const globalCss = () => {
   const fontRangeMax = `((100vw - ${breakpoints.xs}px) / (${breakpoints.lg} - ${breakpoints.xs}))`
   const responsiveFontSize = `calc(${fontRangeMin}) * ${fontRangeMax})`
 
+  cssRule(`::selection`, {
+    backgroundColor: colors.brand
+  })
+
   cssRule(
     `html`,
     { fontSize: `${fontSizeRange.min}px` },
