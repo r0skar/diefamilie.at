@@ -3,7 +3,7 @@
        :class="[styles.app, appInteractivity]">
     <DrawingBoard v-if="enableDrawingBoard" />
     <AppHeader :class="styles.header" />
-    <AppMain :class="[styles.main, mainSpacing, mainStackingOrder]" />
+    <AppMain :class="[styles.main, mainSpacing]" />
     <AppFooter :class="[styles.footer, footerVisibility]" />
     <div :class="styles.borders">
       <div v-for="(border, index) in borders"
@@ -53,7 +53,7 @@ export default class App extends Vue {
       height: design.appFooterHeight,
       position: `fixed`,
       width: `100%`,
-      zIndex: 0
+      zIndex: -1
     }),
     borders: css({
       $nest: {
@@ -107,13 +107,6 @@ export default class App extends Vue {
     return (!this.isHome && status === `hasEntered`) || (from.fullPath !== `/` && !this.isHome)
   }
 
-  private get mainStackingOrder() {
-    return css({
-      position: this.isHome ? `static` : `relative`,
-      zIndex: this.isHome ? `unset` : 1
-    })
-  }
-
   private get mainSpacing() {
     return css({
       marginBottom: this.showFooter ? design.appFooterHeight : undefined,
@@ -123,8 +116,8 @@ export default class App extends Vue {
 
   private get appInteractivity() {
     const { status } = this.store.app.router
-    const isInteractive = status !== `hasEntered` ? `none` : `auto`
-    const overflow = status !== `hasEntered` || this.isHome ? `hidden` : `auto`
+    const isInteractive = status !== `hasEntered` ? `none` : undefined
+    const overflow = status !== `hasEntered` || this.isHome ? `hidden` : undefined
 
     return css({
       overflow,
