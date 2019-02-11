@@ -3,7 +3,7 @@
        :class="[styles.app, appInteractivity]">
     <DrawingBoard v-if="enableDrawingBoard" />
     <AppHeader :class="styles.header" />
-    <AppMain :class="[styles.main, mainSpacing]" />
+    <AppMain :class="[styles.main, mainSpacing, mainStackingOrder]" />
     <AppFooter :class="[styles.footer, footerVisibility]" />
     <div :class="styles.borders">
       <div v-for="(border, index) in borders"
@@ -48,13 +48,12 @@ export default class App extends Vue {
       minHeight: `calc(100vh - ${design.appHeaderHeight})`
     }),
     footer: css({
-      // backgroundColor: design.colors.brand,
       bottom: 0,
       left: 0,
       height: design.appFooterHeight,
       position: `fixed`,
       width: `100%`,
-      zIndex: -1
+      zIndex: 0
     }),
     borders: css({
       $nest: {
@@ -106,6 +105,13 @@ export default class App extends Vue {
     const { from, status } = this.store.app.router
 
     return (!this.isHome && status === `hasEntered`) || (from.fullPath !== `/` && !this.isHome)
+  }
+
+  private get mainStackingOrder() {
+    return css({
+      position: this.isHome ? `static` : `relative`,
+      zIndex: this.isHome ? `unset` : 1
+    })
   }
 
   private get mainSpacing() {
