@@ -59,7 +59,13 @@ export default class HomeView extends Mixins(ViewMixin) {
     ),
     search: {
       container: css(
-        media({ minWidth: design.breakpoints.md }, { ...this.homeIntro.container(1) })
+        {
+          display: `none`
+        },
+        media(
+          { minWidth: design.breakpoints.md },
+          { ...this.homeIntro.container(1), display: `block !important` }
+        )
       ),
       form: css({
         ...design.Utils.coverParent,
@@ -70,20 +76,12 @@ export default class HomeView extends Mixins(ViewMixin) {
         pointerEvents: `none`,
         $nest: { '> div:first-child': this.homeIntro.content }
       }),
-      seperator: css(
-        {
-          backgroundColor: design.colors.text,
-          height: `1px`,
-          display: `inline-block`,
-          width: 0
-        },
-        media(
-          { maxWidth: design.breakpoints.md },
-          {
-            display: `none`
-          }
-        )
-      )
+      seperator: css({
+        backgroundColor: design.colors.text,
+        height: `1px`,
+        display: `inline-block`,
+        width: 0
+      })
     },
     nav: css(
       {
@@ -94,7 +92,7 @@ export default class HomeView extends Mixins(ViewMixin) {
       media(
         { maxWidth: design.breakpoints.md },
         {
-          transform: `translateY(${design.Utils.ms(2.5)})`,
+          transform: `translateY(${design.Utils.ms(1)})`,
           $nest: {
             'ul > li:not(:last-child)': {
               marginBottom: `${design.Utils.ms(1)} !important`
