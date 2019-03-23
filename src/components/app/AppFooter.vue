@@ -1,7 +1,6 @@
 <template>
   <footer>
     <div :class="styles.wrap">
-      <AppContact :class="styles.contact" />
       <AppInfo :class="styles.info" />
     </div>
   </footer>
@@ -10,12 +9,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { css, design } from '~src/design'
-import AppContact from './AppContact.vue'
 import AppInfo from './AppInfo.vue'
 
 @Component({
   components: {
-    AppContact,
     AppInfo
   }
 })
