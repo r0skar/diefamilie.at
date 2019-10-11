@@ -95,6 +95,8 @@ export default class App extends Vue {
   }
 
   private get enableDrawingBoard() {
+    // TODO: fix drawing and than re-enable it.
+    return false
     // Always render canvas while prerendering, otherwhise the canvas element
     // will no get "pinrted" to the html output and the drawing board cant use
     // it as its mount point.
